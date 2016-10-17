@@ -1,0 +1,15 @@
+.simpleucp-containers(ng-controller='containersCtrl')
+  section.content-header
+      h1
+        | Containers
+        small Details of Containers
+
+  section.content
+    .row
+      .col-md-12
+        .box.box-primary
+          .box-header
+            h3.box-title All local containers
+          .box-body.pad.table-responsive
+            div(ng-repeat='container in containers')
+              p {{ container.Image }}

@@ -6,7 +6,8 @@
 
 angular
   .module('simpleucp', [
-    'ui.router'
+    'ui.router',
+    'ngResource'
   ]);
 
 /**
@@ -16,4 +17,9 @@ angular
  */
 angular.element(document).ready(function() {
   angular.bootstrap(document, ['simpleucp']);
+  setTimeout(function() {
+    $('.content-wrapper')
+      .css('min-height', $('body').height() - 101)
+      .addClass('content-wrapper-show');
+  }, 500);
 });

@@ -1,0 +1,19 @@
+aside.main-sidebar(ng-controller='sidemenuCtrl')
+  section.sidebar
+    ul.sidebar-menu
+      li.dashboard(ng-click='chooseActiveItem($event)')
+        a(ui-sref='dashboard')
+          i.fa.fa-dashboard
+          span Dashboard
+      li.images(ng-click='chooseActiveItem($event)')
+        a(ui-sref='images')
+          i.fa.fa-cubes
+          span  Images
+      li.containers(ng-click='chooseActiveItem($event)')
+        a(ui-sref='containers')
+          i.fa.fa-cube
+          span Containers
+      li.dockerhub(ng-click='chooseActiveItem($event)')
+        a(ui-sref='dockerhub')
+          i.fa.fa-cloud
+          span Docker Hub

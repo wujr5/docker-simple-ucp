@@ -1,9 +1,9 @@
 /**
  *
  * @description 服务端脚本，监听3000端口，并且代理到unix-socket进程，间接运行docker命令，并取得结果，返回给前端, docker remote api文档：https://docs.docker.com/engine/reference/api/docker_remote_api/, v1.24版本API: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/
- * 
+ *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
- * 
+ *
  */
 
 const http = require('http');
@@ -19,7 +19,7 @@ app.use(compression());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/public/html/self/views/app.view.html');
+  res.sendFile(__dirname + '/public/html/views/app.view.html');
 });
 
 app.all('/api/*', function(req, res) {
@@ -48,10 +48,10 @@ function proxyToUnixSocket(req, res)    {
       res.json({ message: 'execute error' });
     } else {
       if (typeof stdout === 'string') {
-        res.json(JSON.parse(stdout));
+        res.json({ data: JSON.parse(stdout) });
       }
       else if (typeof stdout === 'object') {
-        res.json(stdout);
+        res.json({ data: stdout });
       } else {
         res.json({ message: 'unknow error' });
       }

@@ -129,6 +129,7 @@ function getInjectFiles() {
     './public/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js',
     './public/bower_components/AdminLTE/plugins/fastclick/fastclick.min.js',
     './public/bower_components/angular/angular.min.js',
+    './public/bower_components/angular-resource/angular-resource.min.js',
     './public/bower_components/angular-ui-router/release/angular-ui-router.min.js',
     './public/dev/js/**/*.js',
     './public/bower_components/AdminLTE/dist/js/app.min.js',
@@ -142,11 +143,11 @@ function getInjectFiles() {
  */
 
 gulp.task('inject:dev', ['less:dev', 'pug', 'babel:dev'], function() {
-  let target = gulp.src('./public/html/self/views/app.view.html');
+  let target = gulp.src('./public/html/views/app.view.html');
   let sources = gulp.src(getInjectFiles(), { read: false });
 
   return target.pipe(inject(sources, injectOptions))
-    .pipe(gulp.dest('./public/html/self/views/'));
+    .pipe(gulp.dest('./public/html/views/'));
 });
 
 /**
@@ -156,11 +157,11 @@ gulp.task('inject:dev', ['less:dev', 'pug', 'babel:dev'], function() {
  */
 
 gulp.task('inject:build', ['less:build', 'pug', 'babel:build'], function() {
-  let target = gulp.src('./public/html/self/views/app.view.html');
+  let target = gulp.src('./public/html/views/app.view.html');
   let sources = gulp.src(getInjectFiles(), { read: false });
 
   return target.pipe(inject(sources, injectOptions))
-    .pipe(gulp.dest('./public/html/self/views/'));
+    .pipe(gulp.dest('./public/html/views/'));
 });
 
 /**

@@ -1,0 +1,15 @@
+.simpleucp-images(ng-controller='imagesCtrl')
+  section.content-header
+      h1
+        | Images
+        small Details of images
+
+  section.content
+    .row
+      .col-md-12
+        .box.box-primary
+          .box-header
+            h3.box-title All local images
+          .box-body.pad.table-responsive
+            div(ng-repeat='image in images')
+              p {{ image.Id }}
