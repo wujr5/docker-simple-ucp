@@ -1,0 +1,24 @@
+{
+  "name": "docker-simple-ucp",
+  "description": "simple universal control plane for docker based on Node.js",
+  "main": "index.js",
+  "authors": [
+    "JiarongWu"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/wujr5/docker-simple-ucp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "AdminLTE": "admin-lte#^2.3.6",
+    "angular-ui-router": "^0.3.1",
+    "font-awesome": "^4.6.3",
+    "Ionicons": "ionicons#^2.0.1"
+  }
+}

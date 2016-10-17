@@ -1,0 +1,21 @@
+head
+  title Simple Docker UCP
+  meta(charset='utf-8')
+  meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name='viewport')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  <!-- inject:css -->
+  <!-- endinject -->
+
+body.hold-transition.skin-blue.sidebar-mini
+  .wrapper
+    //- header
+    ng-include(src="'/html/self/views/header.view.html'")
+    //- side menu
+    ng-include(src="'/html/self/views/sidemenu.view.html'")
+    //- content
+    ng-include(src="'/html/self/views/content.view.html'")
+    //- footer
+    ng-include(src="'/html/self/views/footer.view.html'")
+
+  <!-- inject:js -->
+  <!-- endinject -->
