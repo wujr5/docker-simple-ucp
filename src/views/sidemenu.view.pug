@@ -5,15 +5,39 @@ aside.main-sidebar(ng-controller='sidemenuCtrl')
         a(ui-sref='dashboard')
           i.fa.fa-dashboard
           span Dashboard
-      li.images(ng-click='chooseActiveItem($event)')
-        a(ui-sref='images')
-          i.fa.fa-cubes
-          span  Images
+      li.header RESOURCE
+      li.applications(ng-click='chooseActiveItem($event)')
+        a(ui-sref='applications')
+          i.fa.fa-shopping-bag
+          span Application
       li.containers(ng-click='chooseActiveItem($event)')
         a(ui-sref='containers')
           i.fa.fa-cube
           span Containers
+      li.nodes(ng-click='chooseActiveItem($event)')
+        a(ui-sref='nodes')
+          i.fa.fa-server
+          span Nodes
+      li.images(ng-click='chooseActiveItem($event)')
+        a(ui-sref='images')
+          i.fa.fa-cubes
+          span  Images
       li.dockerhub(ng-click='chooseActiveItem($event)')
         a(ui-sref='dockerhub')
           i.fa.fa-cloud
           span Docker Hub
+      li.networks(ng-click='chooseActiveItem($event)')
+        a(ui-sref='networks')
+          i.fa.fa-sitemap
+          span Networks
+      li.header UCP AMIN
+      li.users(ng-click='chooseActiveItem($event)')
+        a(ui-sref='users')
+          i.fa.fa-user
+          span Users & Teams
+      li.settings(ng-click='chooseActiveItem($event)')
+        a(ui-sref='settings')
+          i.fa.fa-gears
+          span Settings
+
+

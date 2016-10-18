@@ -22,6 +22,17 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/html/views/app.view.html');
 });
 
+app.get('/api/stats', function(req, res) {
+  let command = 'docker stats --no-stream';
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      res.json({ message: 'execute error' });
+    } else {
+      res.json({ data: stdout });
+    }
+  });
+});
+
 app.all('/api/*', function(req, res) {
   proxyToUnixSocket(req, res);
 });

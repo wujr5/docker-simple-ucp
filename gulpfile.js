@@ -128,6 +128,7 @@ function getInjectFiles() {
     './public/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js',
     './public/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js',
     './public/bower_components/AdminLTE/plugins/fastclick/fastclick.min.js',
+    './public/bower_components/AdminLTE/plugins/chartjs/Chart.min.js',
     './public/bower_components/angular/angular.min.js',
     './public/bower_components/angular-resource/angular-resource.min.js',
     './public/bower_components/angular-ui-router/release/angular-ui-router.min.js',

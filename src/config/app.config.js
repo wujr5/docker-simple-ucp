@@ -27,10 +27,10 @@ function simpleucpModuleConfig($locationProvider, $urlRouterProvider, $stateProv
     templateUrl: '/html/views/dashboard.view.html'
   };
 
-  let images = {
-    name: 'images',
-    url: '/images',
-    templateUrl: '/html/views/images.view.html'
+  let applications = {
+    name: 'applications',
+    url: '/applications',
+    templateUrl: '/html/views/applications.view.html'
   };
 
   let containers = {
@@ -39,15 +39,50 @@ function simpleucpModuleConfig($locationProvider, $urlRouterProvider, $stateProv
     templateUrl: '/html/views/containers.view.html'
   };
 
+  let nodes = {
+    name: 'nodes',
+    url: '/nodes',
+    templateUrl: '/html/views/nodes.view.html'
+  };
+
+  let images = {
+    name: 'images',
+    url: '/images',
+    templateUrl: '/html/views/images.view.html'
+  };
+
   let dockerhub = {
     name: 'dockerhub',
     url: '/dockerhub',
     templateUrl: '/html/views/dockerhub.view.html'
   };
 
+  let networks = {
+    name: 'networks',
+    url: '/networks',
+    templateUrl: '/html/views/networks.view.html'
+  };
+
+  let users = {
+    name: 'users',
+    url: '/users',
+    templateUrl: '/html/views/users.view.html'
+  };
+
+  let settings = {
+    name: 'settings',
+    url: '/settings',
+    templateUrl: '/html/views/settings.view.html'
+  };
+
   $stateProvider
     .state(dashboard)
-    .state(images)
     .state(containers)
-    .state(dockerhub);
+    .state(applications)
+    .state(nodes)
+    .state(images)
+    .state(dockerhub)
+    .state(networks)
+    .state(users)
+    .state(settings);
 }

@@ -81,6 +81,9 @@ function portsFilter() {
       return '<none>';
     }
     return ports.map( (port) => {
+      if (!port.PublicPort) {
+        return `${port.PrivatePort}/${port.Type}`;
+      }
       return `${port.IP}:${port.PublicPort}->${port.PrivatePort}/${port.Type}`;
     }).join(',');
   };

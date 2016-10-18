@@ -1,14 +1,78 @@
-section.content-header
+.simpleucp-dashboard(ng-controller='dashboardCtrl')
+  section.content-header
     h1
       | Dashboard
       small Overview of images and containers' information
 
-section.content
-  .row
-    .col-md-12
-      .box.box-primary
-        .box-header
-          h3.box-title Overviews of the local machine
-        .box-body.pad.table-responsive
-          h1 Under construction...
+  section.content
+    .row
+      .col-md-3.col-sm-6.col-xs-12
+        .info-box
+          span.info-box-icon.bg-aqua
+            i.fa.fa-server
+          .info-box-content
+            span.info-box-text Nodes
+            span.info-box-number
+              | 0
+      .col-md-3.col-sm-6.col-xs-12
+        .info-box
+          span.info-box-icon.bg-red
+            i.fa.fa-cubes
+          .info-box-content
+            span.info-box-text Images
+            span.info-box-number 12
+      .clearfix.visible-sm-block
+      .col-md-3.col-sm-6.col-xs-12
+        .info-box
+          span.info-box-icon.bg-green
+            i.fa.fa-cube
+          .info-box-content
+            span.info-box-text Containers
+            span.info-box-number 3
+      .col-md-3.col-sm-6.col-xs-12
+        .info-box
+          span.info-box-icon.bg-yellow
+            i.fa.fa-shopping-bag
+          .info-box-content
+            span.info-box-text Application
+            span.info-box-number 0
+    h4 Resource
+    .row
+      .col-md-6
+        .box.box-info
+          .box-header.with-border
+            h3.box-title CPU Usage
+
+          .box-body
+            .row
+              .col-md-8
+                .chart-responsive
+                  canvas#cpuUsage(height='150')
+              .col-md-4
+                ul.chart-legend.clearfix
+                  li
+                    i.fa.fa-circle-o.text-red
+                    |  Usage
+                  li
+                    i.fa.fa-circle-o.text-green
+                    |  Free
+
+      .col-md-6
+        .box.box-info
+          .box-header.with-border
+            h3.box-title Memory Usage
+
+          .box-body
+            .row
+              .col-md-8
+                .chart-responsive
+                  canvas#memoryUsage(height='150')
+              .col-md-4
+                ul.chart-legend.clearfix
+                  li
+                    i.fa.fa-circle-o.text-red
+                    |  Usage
+                  li
+                    i.fa.fa-circle-o.text-green
+                    |  Free
 
