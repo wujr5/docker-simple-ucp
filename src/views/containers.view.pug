@@ -7,9 +7,36 @@
   section.content
     .row
       .col-md-12
-        .box.box-primary
-          .box-header
-            h3.box-title All local containers
-          .box-body.pad.table-responsive
-            div(ng-repeat='container in containers')
-              p {{ container.Image }}
+        .row
+          .col-xs-12
+            .box
+              .box-header
+                h3.box-title Containers Lists
+                .box-tools
+                  .input-group.input-group-sm(style='width: 150px;')
+                    input.form-control.pull-right(type='text', name='table_search', placeholder='Search' ng-model='searchText')
+                    .input-group-btn
+                      button.btn.btn-default(type='submit')
+                        i.fa.fa-search
+              .box-body.table-responsive.no-padding
+                table.table.table-hover
+                  tr
+                    th #
+                    th ID
+                    th IMAGE
+                    th COMMAND
+                    th CREATED
+                    th STATUS
+                    th PORTS
+                    th NAMES
+                  tr(ng-repeat='container in containers | filter:searchText')
+                    td {{ $index }}
+                    td {{ container.Id | idFilter:'container' }}
+                    td {{ container.Image }}
+                    td {{ container.Command }}
+                    td {{ container.Created | dateFilter }}
+                    td
+                      span.label.label-success {{ container.Status }}
+                    td {{ container.Ports | portsFilter }}
+                    td {{ container.Names | nameFilter }}
+

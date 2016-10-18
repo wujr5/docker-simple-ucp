@@ -15,6 +15,7 @@ function imagesCtrl($scope, $resource) {
   // ====== 1 $scope变量初始化 ======
   function initScopeVariable() {
     $scope.images = null;
+    $scope.searchText = '';
   }
 
   // ====== 2 $rootScope变量初始化 ======

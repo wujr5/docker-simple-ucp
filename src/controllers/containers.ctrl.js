@@ -15,6 +15,7 @@ function containersCtrl($scope, $resource) {
   // ====== 1 $scope变量初始化 ======
   function initScopeVariable() {
     $scope.containers = null;
+    $scope.searchText = '';
   }
 
   // ====== 2 $rootScope变量初始化 ======
@@ -56,8 +57,9 @@ function containersCtrl($scope, $resource) {
 
   // ====== 10 数据访问函数 ======
   function retrieveContainers() {
-    $scope.resource.containers.get({}, function(result, response) {
+    $scope.resource.containers.get({ all: 1 }, function(result, response) {
       $scope.containers = result.data;
+      console.log($scope.containers);
     }, function(error) {
       console.log('Error occur:', error);
     });

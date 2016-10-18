@@ -7,9 +7,31 @@
   section.content
     .row
       .col-md-12
-        .box.box-primary
-          .box-header
-            h3.box-title All local images
-          .box-body.pad.table-responsive
-            div(ng-repeat='image in images')
-              p {{ image.Id }}
+        .row
+          .col-xs-12
+            .box
+              .box-header
+                h3.box-title Images List
+                .box-tools
+                  .input-group.input-group-sm(style='width: 150px;')
+                    input.form-control.pull-right(type='text', name='table_search', placeholder='Search' ng-model='searchText')
+                    .input-group-btn
+                      button.btn.btn-default(type='submit')
+                        i.fa.fa-search
+              .box-body.table-responsive.no-padding
+                table.table.table-hover
+                  tr
+                    th #
+                    th REPOSITORY
+                    th TAG
+                    th IMAGE ID
+                    th CREATED
+                    th SIZE
+                  tr(ng-repeat='image in images | filter:searchText')
+                    td {{ $index }}
+                    td {{ image.RepoTags | repositoryFilter }}
+                    td {{ image.RepoTags | repositoryFilter:'tag' }}
+                    td {{ image.Id | idFilter:'image' }}
+                    td {{ image.Created | dateFilter }}
+                    td {{ image.Size | sizeFilter }} MB
+
