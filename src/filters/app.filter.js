@@ -13,6 +13,12 @@ angular.module('simpleucp')
   .filter('nameFilter', nameFilter)
   .filter('portsFilter', portsFilter);
 
+/**
+ *
+ * @description images和container的id过滤器
+ *
+ */
+
 idFilter.$inject = [];
 function idFilter() {
   return function(id, type) {
@@ -25,6 +31,12 @@ function idFilter() {
   };
 }
 
+/**
+ *
+ * @description image大小过滤器
+ *
+ */
+
 sizeFilter.$inject = [];
 function sizeFilter() {
   return function(size) {
@@ -32,6 +44,12 @@ function sizeFilter() {
     return m.toFixed(2);
   }
 }
+
+/**
+ *
+ * @description 日期格式过滤器，主要用于images和containers的created字段
+ *
+ */
 
 dateFilter.$injeect = [];
 function dateFilter() {
@@ -49,6 +67,12 @@ function dateFilter() {
   };
 }
 
+/**
+ *
+ * @description image仓库数组过滤器
+ *
+ */
+
 repositoryFilter.$inject = [];
 function repositoryFilter() {
   return function(repository, type) {
@@ -65,6 +89,12 @@ function repositoryFilter() {
   };
 }
 
+/**
+ *
+ * @description container名字过滤器，合并数组字符串
+ *
+ */
+
 nameFilter.$inject = [];
 function nameFilter() {
   return function(names) {
@@ -73,6 +103,12 @@ function nameFilter() {
     }).join(',');
   };
 }
+
+/**
+ *
+ * @description container端口过滤器
+ *
+ */
 
 portsFilter.$inject = [];
 function portsFilter() {
