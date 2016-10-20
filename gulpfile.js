@@ -131,6 +131,7 @@ function getInjectFiles() {
     './public/bower_components/AdminLTE/plugins/chartjs/Chart.min.js',
     './public/bower_components/angular/angular.min.js',
     './public/bower_components/angular-resource/angular-resource.min.js',
+    './public/bower_components/angular-animate/angular-animate.min.js',
     './public/bower_components/angular-ui-router/release/angular-ui-router.min.js',
     './public/dev/js/**/*.js',
     './public/bower_components/AdminLTE/dist/js/app.min.js',

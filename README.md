@@ -21,3 +21,12 @@ Simple universal control plane for docker.
 ```bash
 docker pull wujr5/ubuntu-simple-ucp:latest
 ```
+
+# Contribute
+
+```bash
+git clone git@github.com:wujr5/docker-simple-ucp.git
+cd docker-simple-ucp
+npm install && bower install
+gulp
+```
