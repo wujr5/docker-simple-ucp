@@ -7,7 +7,8 @@
 angular
   .module('simpleucp', [
     'ui.router',
-    'ngResource'
+    'ngResource',
+    'ngAnimate'
   ]);
 
 /**
@@ -15,6 +16,7 @@ angular
  * @description 引导ng-app
  *
  */
+
 angular.element(document).ready(function() {
   angular.bootstrap(document, ['simpleucp']);
   setTimeout(function() {
