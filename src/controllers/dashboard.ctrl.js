@@ -8,12 +8,16 @@
 angular.module('simpleucp')
   .controller('dashboardCtrl', dashboardCtrl);
 
-dashboardCtrl.$injeect = ['$scope', '$resource'];
+dashboardCtrl.$injeect = ['$scope', '$resource', '$pieChartFactory'];
 
-function dashboardCtrl($scope, $resource) {
+function dashboardCtrl($scope, $resource, $pieChartFactory) {
 
   // ====== 1 $scope变量初始化 ======
   function initScopeVariable() {
+    $scope.images = null;
+    $scope.containers = null;
+    $scope.nodes = null;
+    $scope.stats = null;
   }
 
   // ====== 2 $rootScope变量初始化 ======
@@ -22,80 +26,23 @@ function dashboardCtrl($scope, $resource) {
   // ====== 3 $resource变量初始化 ======
   function initResourceVariable() {
     $scope.resource = {};
+    $scope.resource.containers = $resource('/api/containers/json');
+    $scope.resource.images = $resource('/api/images/json');
+    $scope.resource.nodes = $resource('/api/nodes');
     $scope.resource.stats = $resource('/api/stats');
   }
 
   // ====== 4 页面元素初始化 ======
   function initPageDom() {
-    let cupUsageChartCanvas = $("#cpuUsage").get(0).getContext("2d");
-    let memoryUsageChartCanvas = $("#memoryUsage").get(0).getContext("2d");
 
-    let cupUsagePieChart = new Chart(cupUsageChartCanvas);
-    let memoryUsagPieChart = new Chart(memoryUsageChartCanvas);
-
-    let cupUsagePieData = [
-      {
-        value: 30,
-        color: "#f56954",
-        highlight: "#f56954",
-        label: "Usage"
-      },
-      {
-        value: 70,
-        color: "#00a65a",
-        highlight: "#00a65a",
-        label: "Free"
-      }
-    ];
-
-    let memoryUsagePieData = [
-      {
-        value: 40,
-        color: "#f56954",
-        highlight: "#f56954",
-        label: "Usage"
-      },
-      {
-        value: 60,
-        color: "#00a65a",
-        highlight: "#00a65a",
-        label: "Free"
-      }
-    ];
-
-    let pieOptions = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke: true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor: "#fff",
-      //Number - The width of each segment stroke
-      segmentStrokeWidth: 1,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps: 100,
-      //String - Animation easing effect
-      animationEasing: "easeOutBounce",
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate: true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale: false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive: true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio: false,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
-      //String - A tooltip template
-      tooltipTemplate: "<%=value%>% <%=label%>"
-    };
-
-    cupUsagePieChart.Doughnut(cupUsagePieData, pieOptions);
-    memoryUsagPieChart.Doughnut(memoryUsagePieData, pieOptions);
   }
 
   // ====== 5 页面数据初始化 ======
   function initPageData() {
+    retrieveImages();
+    retrieveContainers();
+    retrieveNodes();
+    retrieveStats().then(setPieCharts);
   }
 
   // ====== 6 页面事件初始化 ======
@@ -117,14 +64,73 @@ function dashboardCtrl($scope, $resource) {
   // ====== 8 $scope事件函数定义 ======
 
   // ====== 9 工具函数定义 ======
+  function setPieCharts(result) {
+    let cpuUsed = parseFloat(($scope.stats.averagerCpuUsage * 100).toFixed(2));
+    let cpuFree = parseFloat(((1 - $scope.stats.averagerCpuUsage) * 100).toFixed(2));
+    let cpuUsageTemplate = "<%=value%>% <%=label%>";
+    $pieChartFactory.createPieChart('#cpuUsage', cpuUsed, cpuFree, cpuUsageTemplate);
+
+    let memoryFree = $scope.stats.freemem;
+    let memoryUsed = $scope.stats.totalmem - memoryFree;
+    let memoryUsageTemplate = "<%=value%>G <%=label%>";
+    $pieChartFactory.createPieChart('#memoryUsage', memoryUsed, memoryFree, memoryUsageTemplate);
+
+    $scope.cpu = { used: cpuUsed, free: cpuFree };
+    $scope.memory = { used: memoryUsed, free: memoryFree };
+  }
 
   // ====== 10 数据访问函数 ======
-  function retrieveStats() {
-    $scope.resource.stats.get({}, function(result, header) {
-      console.log(result);
+
+  function retrieveImages() {
+    return $scope.resource.images.get({}, function(result, header) {
+      $scope.images = result.data;
     }, function(error) {
       console.log('Error occur:', error);
-    });
+    }).$promise;
+  }
+
+  function retrieveContainers() {
+    return $scope.resource.containers.get({all: true}, function(result, header) {
+      $scope.containers = result.data;
+    }, function(error) {
+      console.log('Error occur:', error);
+    }).$promise;
+  }
+
+  function retrieveNodes() {
+    return $scope.resource.nodes.get({}, function(result, header) {
+      if (Array.isArray(result.data)) {
+        $scope.nodes = result.data;
+      } else {
+        $scope.nodes = [];
+      }
+    }, function(error) {
+      console.log('Error occur:', error);
+    }).$promise;
+  }
+
+  function retrieveStats(id) {
+    return $scope.resource.stats.get({}, function(result) {
+      $scope.stats = result.data;
+      let freemem = $scope.stats.freemem / (1024 * 1024 * 1024);
+      let totalmem = $scope.stats.totalmem / (1024 * 1024 * 1024);
+      $scope.stats.freemem = parseFloat(freemem.toFixed(3));
+      $scope.stats.totalmem = parseFloat(totalmem.toFixed(3));
+
+      let perCpuUsage = $scope.stats.cpus.map((item) => {
+        let total = 0;
+        for (let k in item.times) total += item.times[k];
+        return (item.times.user + item.times.sys) / total;
+      });
+
+      let averagerCpuUsage = perCpuUsage.reduce((previousValue, currentValue, index, array) => {
+        return previousValue + currentValue;
+      }, 0) / $scope.stats.cpus.length;
+
+      $scope.stats.averagerCpuUsage = parseFloat(averagerCpuUsage.toFixed(4));
+    }, function(error) {
+      console.log('Error occur:', error);
+    }).$promise;
   }
 
   // ====== 11 初始化函数执行 ======

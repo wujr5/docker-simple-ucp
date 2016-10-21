@@ -59,7 +59,6 @@ function containersCtrl($scope, $resource) {
   function retrieveContainers() {
     $scope.resource.containers.get({ all: 1 }, function(result, response) {
       $scope.containers = result.data;
-      console.log($scope.containers);
     }, function(error) {
       console.log('Error occur:', error);
     });

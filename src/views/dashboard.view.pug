@@ -12,15 +12,14 @@
             i.fa.fa-server
           .info-box-content
             span.info-box-text Nodes
-            span.info-box-number
-              | 0
+            span.info-box-number {{ nodes.length }}
       .col-md-3.col-sm-6.col-xs-12
         .info-box
           span.info-box-icon.bg-red
             i.fa.fa-cubes
           .info-box-content
             span.info-box-text Images
-            span.info-box-number 12
+            span.info-box-number {{ images.length }}
       .clearfix.visible-sm-block
       .col-md-3.col-sm-6.col-xs-12
         .info-box
@@ -28,7 +27,7 @@
             i.fa.fa-cube
           .info-box-content
             span.info-box-text Containers
-            span.info-box-number 3
+            span.info-box-number {{ containers.length }}
       .col-md-3.col-sm-6.col-xs-12
         .info-box
           span.info-box-icon.bg-yellow
@@ -37,6 +36,7 @@
             span.info-box-text Application
             span.info-box-number 0
     h4 Resource
+      small  System resource of CUP and memory
     .row
       .col-md-6
         .box.box-info
@@ -52,10 +52,12 @@
                 ul.chart-legend.clearfix
                   li
                     i.fa.fa-circle-o.text-red
-                    |  Usage
+                    |  Usage:
+                    b  {{ cpu.used }} %
                   li
                     i.fa.fa-circle-o.text-green
-                    |  Free
+                    |  Free:
+                    b  {{ cpu.free }} %
 
       .col-md-6
         .box.box-info
@@ -71,8 +73,9 @@
                 ul.chart-legend.clearfix
                   li
                     i.fa.fa-circle-o.text-red
-                    |  Usage
+                    |  Usage:
+                    b  {{ memory.used }} G
                   li
                     i.fa.fa-circle-o.text-green
-                    |  Free
-
+                    |  Free:
+                    b  {{ memory.free }} G

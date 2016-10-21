@@ -12,25 +12,32 @@ const express = require('express');
 const app = express();
 const compression = require('compression');
 const bodyParser = require('body-parser');
+const path = require('path');
+const os = require('os');
+
+
 
 app.use(express.static(__dirname + '/public'));
-// app.use(express.static(__dirname + '/public/bower_components/AdminLTE/'));
 app.use(compression());
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '1y',
+  setHeaders (res, path) {
+    if (mime.lookup(path) === 'text/html' || process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test') {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+  }
+}));
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/html/views/app.view.html');
 });
 
 app.get('/api/stats', function(req, res) {
-  let command = 'docker stats --no-stream';
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      res.json({ message: 'execute error' });
-    } else {
-      res.json({ data: stdout });
-    }
-  });
+  let cpus = os.cpus();
+  let freemem = os.freemem();
+  let totalmem = os.totalmem();
+  res.json({ data: { cpus, freemem, totalmem } });
 });
 
 app.all('/api/*', function(req, res) {
