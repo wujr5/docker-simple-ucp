@@ -31,12 +31,12 @@
                     th NAMES
                   tr(ng-repeat='container in containers | filter:searchText')
                     td {{ $index }}
-                    td {{ container.Id | idFilter:'container' }}
+                    td {{ container.Id }}
                     td {{ container.Image }}
                     td {{ container.Command }}
-                    td {{ container.Created | dateFilter }}
+                    td {{ container.Created }}
                     td
                       span.label.label-success {{ container.Status }}
-                    td {{ container.Ports | portsFilter }}
-                    td {{ container.Names | nameFilter }}
+                    td {{ container.Ports }}
+                    td {{ container.Names }}
 

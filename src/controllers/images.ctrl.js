@@ -16,6 +16,7 @@ function imagesCtrl($scope, $resource) {
   function initScopeVariable() {
     $scope.images = null;
     $scope.searchText = '';
+    $scope.propertyName = 'repository'
   }
 
   // ====== 2 $rootScope变量初始化 ======
@@ -52,14 +53,59 @@ function imagesCtrl($scope, $resource) {
   }
 
   // ====== 8 $scope事件函数定义 ======
+  $scope.sortBy = function(name) {
+
+  };
 
   // ====== 9 工具函数定义 ======
+  function imagesMapper(item) {
+    let newItem = {};
+    let pos =  item.Id.indexOf(':') + 1;
+    newItem.Id = item.Id.substring(pos, pos + 12);
+
+    newItem.Size = (item.Size / (1000 * 1000)).toFixed(2);
+    newItem.Created = getFormatDate(item.Created);
+    newItem.RepoName = getRepoName(item.RepoTags);
+    newItem.RepoTag = getRepoTag(item.RepoTags);
+
+    return newItem;
+  }
+
+  function getFormatDate(date) {
+    let jsDate = new Date(parseInt(date) * 1000);
+
+    let year = jsDate.getFullYear();
+    let month = jsDate.getMonth() + 1;
+    let day = jsDate.getDate();
+    let hours = jsDate.getHours();
+    let minutes = jsDate.getMinutes();
+    let seconds = jsDate.getSeconds();
+
+    return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  function getRepoName(repository) {
+    if (repository.length === 0) {
+      return '<none>';
+    } else {
+      let image = repository[0];
+      return image.substring(0, image.indexOf(':'));
+    }
+  }
+
+  function getRepoTag(repository) {
+    if (repository.length === 0) {
+      return '<none>';
+    } else {
+      let image = repository[0];
+      return image.substr(image.indexOf(':') + 1);
+    }
+  }
 
   // ====== 10 数据访问函数 ======
   function retrieveContainers() {
     $scope.resource.images.get({}, function(result, response) {
-      $scope.images = result.data;
-      console.log($scope.images);
+      $scope.images = result.data.map(imagesMapper);
     }, function(error) {
       console.log('Error occur:', error);
     });

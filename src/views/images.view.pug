@@ -29,9 +29,9 @@
                     th SIZE
                   tr(ng-repeat='image in images | filter:searchText')
                     td {{ $index }}
-                    td {{ image.RepoTags | repositoryFilter }}
-                    td {{ image.RepoTags | repositoryFilter:'tag' }}
-                    td {{ image.Id | idFilter:'image' }}
-                    td {{ image.Created | dateFilter }}
-                    td {{ image.Size | sizeFilter }} MB
+                    td {{ image.RepoName }}
+                    td {{ image.RepoTag }}
+                    td {{ image.Id }}
+                    td {{ image.Created }}
+                    td {{ image.Size }} MB
 
